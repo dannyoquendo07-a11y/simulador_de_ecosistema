@@ -14,7 +14,7 @@ class Especies:
     @poblacion.setter
     def poblacion(self,valor):
         if valor<0:
-            print(f"La especie: {self.nombre} se ha extinguido")
+            print(f"La especie: '{self.nombre}' se ha extinguido")
             self.poblacion=valor
 
     def actualizar(self,recursos_disponibles:float):
@@ -62,17 +62,33 @@ class Presa(Especies):
 @dataclass
 class Entorno:
     vegetacion:float
-    capacidad_comida:int
     humedad:float
     temperatura:float
-    capacidad_especies:int
+    dia_actual=int=0
+    clima=str
+
+    def aplicar_clima(self):
+        evento=random.random()
+        if evento<0.15:
+            self.clima="LLuvia"
+            self.humedad=min(100,self.humedad+20)
+            self.temperatura-=5
+            self.vegetacion*=1.1
+        elif evento<0.25:
+            self.clima="Sequia"
+            self.humedad=max(0,self.humedad-15)
+            self.temperatura+=8
+            self.vegetacion*=0.8
+        else:
+            self.clima="Soleado"
+            self.humedad=max(10,self.humedad-2)
+        print(f"Estado del clima: {self.clima}\nTemperatura: {self.temperatura}°C\nHumedad: {self.humedad}%")
 
     def generar_vegetacion(self):
         crecimiento=self.temperatura*self.humedad
         self.vegetacion+=crecimiento
         print(f"Recursos generados a: {self.vegetacion}")
     
-    def aplicar_clima(self):
-        if self.temperatura>40 or self.temperatura<-5:
-            print("Clima extremo detectado")
-    
+    def avanzar_dia(self):
+        self.dia_actual+=1   
+        print(f"Dia: {self.dia_actual}")
