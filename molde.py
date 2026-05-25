@@ -4,18 +4,21 @@ import random
 @dataclass
 class Especies:
     nombre:str
-    poblacion:int
+    poblacion_inicial:int
     tasa_reproduccion:float
     tasa_mortalidad:float
     
+    def __post_init__(self):
+        self._poblacion=self.poblacion_inicial
+
     @property
-    def poblacion(self):
-        return self.poblacion
+    def poblacion(self)->int:
+        return self._poblacion
     @poblacion.setter
-    def poblacion(self,valor):
+    def poblacion(self,valor:int):
         if valor<0:
             print(f"La especie: '{self.nombre}' se ha extinguido")
-            self.poblacion=valor
+            self._poblacion=valor
 
     def actualizar(self,recursos_disponibles:float):
         nacimientos=self.poblacion*self.tasa_reproduccion*(recursos_disponibles/100)
@@ -66,6 +69,7 @@ class Entorno:
     temperatura:float
     dia_actual=int=0
     clima=str
+    simulacion=False
 
     def aplicar_clima(self):
         evento=random.random()
@@ -92,3 +96,7 @@ class Entorno:
     def avanzar_dia(self):
         self.dia_actual+=1   
         print(f"Dia: {self.dia_actual}")
+    
+    def empezar_simulacion(self):
+        self.simulacion=True
+        
