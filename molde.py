@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import random
 
 @dataclass
+# todo: cambiar a especia
 class Especies:
     nombre:str
     poblacion_inicial:int
