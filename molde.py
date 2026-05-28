@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import random
 
 @dataclass
-class Especies:
+class Especie:
     nombre:str
     poblacion_inicial:int
     tasa_reproduccion:float
@@ -96,7 +96,3 @@ class Entorno:
     def avanzar_dia(self):
         self.dia_actual+=1   
         print(f"Dia: {self.dia_actual}")
-    
-    def empezar_simulacion(self):
-        self.simulacion=True
-        
