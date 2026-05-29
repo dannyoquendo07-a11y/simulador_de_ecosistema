@@ -6,10 +6,15 @@ class Entorno:
     vegetacion:float
     humedad:float
     temperatura:float
-    dia_actual=int=0
+    dia_actual:int=0
     clima=str
     simulacion=False
-
+    especies=list=None
+    
+    def __post_init__(self):
+        if self.especies is None:
+            self.especies = []
+    
     def aplicar_clima(self):
         evento=random.random()
         if evento<0.15:
@@ -28,9 +33,9 @@ class Entorno:
         print(f"Estado del clima: {self.clima}\nTemperatura: {self.temperatura}°C\nHumedad: {self.humedad}%")
 
     def generar_vegetacion(self):
-        crecimiento=self.temperatura*self.humedad
-        self.vegetacion+=crecimiento
-        print(f"Recursos generados a: {self.vegetacion}")
+        crecimiento=(self.temperatura*self.humedad)*0.05
+        self.vegetacion=max(0.0,self.vegetacio+crecimiento)
+        print(f"Vegetacion disponible: {self.vegetacion}")
     
     def avanzar_dia(self):
         self.dia_actual+=1   
