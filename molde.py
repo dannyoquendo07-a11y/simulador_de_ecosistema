@@ -40,14 +40,16 @@ class Entorno:
     def avanzar_dia(self):
         self.dia_actual+=1   
         print(f"Dia: {self.dia_actual}")
+        self.aplicar_clima()
+        self.generar_vegetacion()
 
 @dataclass
-
 class Especie:
     nombre:str
     poblacion_inicial:int
     tasa_reproduccion:float
     tasa_mortalidad:float
+    hambre:float=0.0
     
     def __post_init__(self):
         self._poblacion=self.poblacion_inicial
@@ -58,7 +60,8 @@ class Especie:
     @poblacion.setter
     def poblacion(self,valor:int):
         if valor<0:
-            print(f"La especie: '{self.nombre}' se ha extinguido")
+            self._poblacion=0
+        else:
             self._poblacion=valor
 
     def actualizar(self,recursos_disponibles:float):
