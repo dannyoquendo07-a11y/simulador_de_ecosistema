@@ -65,13 +65,22 @@ class Especie:
             self._poblacion=valor
 
     def actualizar(self,recursos_disponibles:float):
+        if self.poblacion<=0:
+            return
+        self.hambre+=15
+        
+        self.tasa_mortalidad_efectiva=self.tasa_mortalidad
+        if self.hambre>70:
+            print(f"{self.nombre} esta sufriendo por hambre extrema")
+            self.tasa_mortalidad_efectiva+=25
+        
         nacimientos=self.poblacion*self.tasa_reproduccion*(recursos_disponibles/100)
         muertes=self.poblacion*self.tasa_mortalidad
-        self.poblacion+=nacimientos-muertes
         
-        if self.poblacion<0:
-            self.poblacion=0
-        self.poblacion=int(self.poblacion)
+        self.poblacion=int(nacimientos-muertes)
+        if self.poblacion==0:
+            print(f"La especie esta extinguida")
+
 
 @dataclass
 class Depredador(Especie):
