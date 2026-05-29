@@ -85,7 +85,6 @@ class Especie:
 @dataclass
 class Depredador(Especie):
     eficacia_caza:float
-    hambre:float
 
     def cazar(self,presa):
         if presa.poblacion>0:
