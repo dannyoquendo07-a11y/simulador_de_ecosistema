@@ -35,3 +35,27 @@ En salir_de_refugio, cambiaste a self.escondida = False (con a), cuando la varia
 
 # 6. En la clase Depredador tienes la línea if isinstance(presa, Presa):. Como la clase Presa está definida abajo de Depredador, Python lanzará un error de tipo NameError: name 'Presa' is not defined.
 Solución: Mover la clase Presa para que se defina antes de Depredador.
+
+# 7. Todos los argumentos que NO tienen un valor por defecto deben ir PRIMERO, y los argumentos que SÍ tienen un valor por defecto (como dia_actual=0) deben ir al final.
+ERROR EN CODIGO:
+@dataclass
+class Entorno:
+    vegetacion: float              # Sin valor por defecto (OK)
+    humedad: float                 # Sin valor por defecto (OK)
+    temperatura: float             # Sin valor por defecto (OK)
+    dia_actual: int = 0            # ⚠️ CON VALOR POR DEFECTO
+    clima: str                     # ❌ SIN VALOR POR DEFECTO (Esto rompe la regla)
+    simulacion: bool = False       # CON VALOR POR DEFECTO
+    especies: list['Especie'] = field(default_factory=list)
+Solo tienes que mover clima hacia arriba, junto con las otras variables que no tienen un valor inicial asignado.
+
+En la clase base Especie, tienes la variable hambre: float = 0.0 (que tiene un valor por defecto). Al crear la clase hija Presa, añadiste resistencia: float y camuflaje: float (que no tienen valor por defecto).
+Para Python, internamente la estructura de Presa se está leyendo así:
+nombre: str
+poblacion_inicial: int
+tasa_reproduccion: float
+tasa_mortalidad: float
+hambre: float = 0.0 (⚠️ VALOR POR DEFECTO)
+resistencia: float (❌ SIN VALOR POR DEFECTO - Rompe la regla porque va después de hambre)
+camuflaje: float
+Para solucionar esto en las clases heredadas (Presa y Depredador) cuando la clase padre ya tiene un argumento con valor por defecto, lo más limpio y recomendable es asignarles también un valor por defecto a los nuevos atributos de las subclases.
