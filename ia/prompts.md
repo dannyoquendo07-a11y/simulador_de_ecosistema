@@ -1,16 +1,10 @@
-# yo
+#yo
+revisa y corrige errores en:  
+    especies=list=None
 
-asdkmlasdkmlasd
-
-
-# ia
-
-1- asodkasodkaskodasodkaskd
-
-2- asodkasodkasodk
-
-3-4 amsdkmaspodmasd
-
-
-# yo
- -
+    def __post_init__(self):
+        if self.especies is None:
+            self.especies = []
+#ia
+# Usamos field(default_factory=list) para inicializar listas vacías en dataclasses
+    especies: List['Especie'] = field(default_factory=list)
