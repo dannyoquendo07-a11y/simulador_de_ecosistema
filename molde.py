@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import random
 from typing import List
 
@@ -9,8 +9,8 @@ class Entorno:
     temperatura:float
     dia_actual:int=0
     clima:str
-    simulacion:False
-    especies:list['Especie']= field(default_factory=list)
+    simulacion:bool=False
+    especies:list['Especie']=field(default_factory=list)
     
     def __post_init__(self):
         if self.especies is None:
