@@ -81,33 +81,6 @@ class Especie:
         if self.poblacion==0:
             print(f"La especie esta extinguida")
 
-
-@dataclass
-class Depredador(Especie):
-    eficacia_caza:float
-
-    def cazar(self,presa:Especie,clima_actual:str):
-        
-        if self.poblacion<=0 or presa.poblacion<=0:
-            return
-        
-        eficacia_caza_real=self.eficacia_caza
-        if clima_actual=="Lluvia":
-            eficacia_caza_real*=0.7
-            print(f"La lluvia afecta la caza")
-        capturas=self.eficacia_caza*eficacia_caza_real
-        if isinstance(presa,Presa) and presa.intentar_huir():
-            capturas*=(1-presa.camuflaje)
-            print("Caza fallida, presa escondida")
-        if capturas>presa.poblacion:
-            capturas=presa.poblacion
-        presa.poblacion-=int(capturas)
-        self.comer(int(capturas))
-    
-    def comer(self,presas_capturadas:int):
-        self.hambre=max(0.0,self.hambre-(presas_capturadas*8))
-        print(f"Los depredadores cazaron {presas_capturadas}. \nHambre actual: {self.hambre}")
-
 @dataclass
 class Presa(Especie):
     resistencia:float
@@ -135,3 +108,29 @@ class Presa(Especie):
             self.escondido=False
             self.tasa_mortalidad/=0.8
             print(f"{self.nombre} ha salido del refugio.")
+
+@dataclass
+class Depredador(Especie):
+    eficacia_caza:float
+
+    def cazar(self,presa:Especie,clima_actual:str):
+        
+        if self.poblacion<=0 or presa.poblacion<=0:
+            return
+        
+        eficacia_caza_real=self.eficacia_caza
+        if clima_actual=="Lluvia":
+            eficacia_caza_real*=0.7
+            print(f"La lluvia afecta la caza")
+        capturas=self.eficacia_caza*eficacia_caza_real
+        if isinstance(presa,Presa) and presa.intentar_huir():
+            capturas*=(1-presa.camuflaje)
+            print("Caza fallida, presa escondida")
+        if capturas>presa.poblacion:
+            capturas=presa.poblacion
+        presa.poblacion-=int(capturas)
+        self.comer(int(capturas))
+    
+    def comer(self,presas_capturadas:int):
+        self.hambre=max(0.0,self.hambre-(presas_capturadas*8))
+        print(f"Los depredadores cazaron {presas_capturadas}. \nHambre actual: {self.hambre}")

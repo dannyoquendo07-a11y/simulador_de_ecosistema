@@ -32,3 +32,6 @@ En salir_de_refugio, cambiaste a self.escondida = False (con a), cuando la varia
 # 4. Lógica de Atributos Locales vs. Instancia: En actualizar (clase Especie), intentas modificar self.tasa_mortalidad_efectiva += 25, pero esa variable no existe en la instancia; creaste una variable local llamada tasa_mortalidad_efectiva unas líneas más arriba. Además, al calcular muertes, seguías usando la tasa original en lugar de la modificada
 
 # 5. Comparación de Strings: En aplicar_clima defines "LLuvia" (con doble L mayúscula), pero en cazar preguntas por "Lluvia". Esto haría que el clima nunca afectara a la caza.
+
+# 6. En la clase Depredador tienes la línea if isinstance(presa, Presa):. Como la clase Presa está definida abajo de Depredador, Python lanzará un error de tipo NameError: name 'Presa' is not defined.
+Solución: Mover la clase Presa para que se defina antes de Depredador.
