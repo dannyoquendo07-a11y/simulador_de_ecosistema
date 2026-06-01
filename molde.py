@@ -8,8 +8,8 @@ class Entorno:
     humedad:float
     temperatura:float
     dia_actual:int=0
-    clima=str
-    simulacion=False
+    clima:str
+    simulacion:False
     especies:list['Especie']= field(default_factory=list)
     
     def __post_init__(self):
