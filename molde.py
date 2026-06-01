@@ -72,10 +72,10 @@ class Especie:
         tasa_mortalidad_efectiva=self.tasa_mortalidad
         if self.hambre>70:
             print(f"{self.nombre} esta sufriendo por hambre extrema")
-            self.tasa_mortalidad_efectiva+=25
+            tasa_mortalidad_efectiva+=25
         
         nacimientos=self.poblacion*self.tasa_reproduccion*(recursos_disponibles/100)
-        muertes=self.poblacion*self.tasa_mortalidad
+        muertes=self.poblacion*tasa_mortalidad_efectiva
         
         self.poblacion=int(self.poblacion+nacimientos-muertes)
         if self.poblacion==0:

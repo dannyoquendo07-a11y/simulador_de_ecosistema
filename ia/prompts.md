@@ -28,3 +28,5 @@ CORRECION EN CODIGO:
 # 3. Errores de Typos (Errores de dedo):
 En generar_vegetacion, escribiste self.vegetacio (falta la n).
 En salir_de_refugio, cambiaste a self.escondida = False (con a), cuando la variable original es self.escondido (con o)
+
+# 4. Lógica de Atributos Locales vs. Instancia: En actualizar (clase Especie), intentas modificar self.tasa_mortalidad_efectiva += 25, pero esa variable no existe en la instancia; creaste una variable local llamada tasa_mortalidad_efectiva unas líneas más arriba. Además, al calcular muertes, seguías usando la tasa original en lugar de la modificada
