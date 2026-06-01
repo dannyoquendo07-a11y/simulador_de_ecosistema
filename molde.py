@@ -35,7 +35,7 @@ class Entorno:
 
     def generar_vegetacion(self):
         crecimiento=(self.temperatura*self.humedad)*0.05
-        self.vegetacion=max(0.0,self.vegetacio+crecimiento)
+        self.vegetacion=max(0.0,self.vegetacion+crecimiento)
         print(f"Vegetacion disponible: {self.vegetacion}")
     
     def avanzar_dia(self):
@@ -132,6 +132,6 @@ class Presa(Especie):
     
     def salir_de_refugio(self):
         if self.escondido:
-            self.escondida=False
+            self.escondido=False
             self.tasa_mortalidad/=0.8
             print(f"{self.nombre} ha salido del refugio.")

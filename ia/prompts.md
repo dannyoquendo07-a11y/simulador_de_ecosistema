@@ -24,3 +24,7 @@ CORRECION EN CODIGO:
         if isinstance(presa,Presa) and presa.intentar_huir():
             capturas*=(1-presa.camuflaje)
             print("Caza fallida, presa escondida")
+
+# 3. Errores de Typos (Errores de dedo):
+En generar_vegetacion, escribiste self.vegetacio (falta la n).
+En salir_de_refugio, cambiaste a self.escondida = False (con a), cuando la variable original es self.escondido (con o)
