@@ -19,7 +19,7 @@ class Entorno:
     def aplicar_clima(self):
         evento=random.random()
         if evento<0.15:
-            self.clima="LLuvia"
+            self.clima="Lluvia"
             self.humedad=min(100,self.humedad+20)
             self.temperatura-=5
             self.vegetacion*=1.1
