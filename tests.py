@@ -1,10 +1,15 @@
 import unittest
-from molde import Especies
+from molde import Especie
 
 class TestEspecies(unittest.TestCase):
     def test_inicializacion_poblacion(self):
-        lobo=Especies("Lobo",50,0.1,0.05)
+        lobo=Especie("Lobo",50,0.1,0.05)
         self.assertEqual(lobo.poblacion,50)
+    
+    def test_poblacion_no_negativa(self):
+        conejo=Especie("Conejo",10,0.2,0.1)
+        conejo.poblacion=-10
+        self.assertEqual(conejo.poblacion, 0)
 
 
 class EcosistemaTests(unittest.TestCase):
