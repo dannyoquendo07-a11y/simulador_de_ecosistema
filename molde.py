@@ -68,8 +68,7 @@ class Especie:
         if self.poblacion<=0:
             return
         self.hambre+=15
-        
-        self.tasa_mortalidad_efectiva=self.tasa_mortalidad
+        tasa_mortalidad_efectiva=self.tasa_mortalidad
         if self.hambre>70:
             print(f"{self.nombre} esta sufriendo por hambre extrema")
             self.tasa_mortalidad_efectiva+=25
@@ -77,7 +76,7 @@ class Especie:
         nacimientos=self.poblacion*self.tasa_reproduccion*(recursos_disponibles/100)
         muertes=self.poblacion*self.tasa_mortalidad
         
-        self.poblacion=int(nacimientos-muertes)
+        self.poblacion=int(self.poblacion+nacimientos-muertes)
         if self.poblacion==0:
             print(f"La especie esta extinguida")
 
@@ -86,30 +85,52 @@ class Especie:
 class Depredador(Especie):
     eficacia_caza:float
 
-    def cazar(self,presa):
-        if presa.poblacion>0:
-            capturas=self.poblacion*self.eficacia_caza
-            if capturas>presa.poblacion:
-                capturas=presa.poblacion
-            presa.poblacion-=int(capturas)
-            return capturas
-        return 0
+    def cazar(self,presa:Especie,clima_actual:str):
+        
+        if self.poblacion<=0 or presa.poblacion<=0:
+            return
+        
+        eficacia_caza_real=self.eficacia_caza
+        if clima_actual=="Lluvia":
+            eficacia_caza_real*=0.7
+            print(f"La lluvia afecta la caza")
+        capturas=self.eficacia_caza*eficacia_caza_real
+        if isinstance(presa) and presa.intentar_huir():
+            capturas*=(1-presa.camuflaje)
+            print("Caza fallida, presa escondida")
+        if capturas>presa.poblacion:
+            capturas=presa.poblacion
+        presa.poblacion-=int(capturas)
+        self.comer(int(capturas))
     
     def comer(self,presas_capturadas:int):
-        self.hambre-=presas_capturadas
+        self.hambre=max(0.0,self.hambre-(presas_capturadas*8))
+        print(f"Los depredadores cazaron {presas_capturadas}. \nHambre actual: {self.hambre}")
 
 @dataclass
 class Presa(Especie):
     resistencia:float
     camuflaje:float
+    escondido:bool=False
     
     def intentar_huir(self)->bool:
+        self.hambre+=10
         return random.random()<self.resistencia
     
     def comer(self,abundancia_recursos:float):
-        if abundancia_recursos>50:
-            self.poblacion+=int(self.poblacion*0.05)
+        if abundancia_recursos>20:
+            self.hambre=max(0.0,self.hambre-(abundancia_recursos*0.5))
+        else:
+            print("Hay escazes no se encontro comida")
     
     def buscar_refugio(self):
-        self.tasa_mortalidad*=0.8
-        print(f"La poblacion de: {self.nombre} se ha escondido")
+        if not self.escondido:
+            self.escondido=True
+            self.tasa_mortalidad*=0.8
+            print(f"La poblacion de: {self.nombre} se ha escondido")
+    
+    def salir_de_refugio(self):
+        if self.escondido:
+            self.escondida=False
+            self.tasa_mortalidad/=0.8
+            print(f"{self.nombre} ha salido del refugio.")
