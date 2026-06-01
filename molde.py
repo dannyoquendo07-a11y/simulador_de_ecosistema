@@ -7,8 +7,8 @@ class Entorno:
     vegetacion:float
     humedad:float
     temperatura:float
-    dia_actual:int=0
     clima:str
+    dia_actual:int=0
     simulacion:bool=False
     especies:list['Especie']=field(default_factory=list)
     
@@ -83,8 +83,8 @@ class Especie:
 
 @dataclass
 class Presa(Especie):
-    resistencia:float
-    camuflaje:float
+    resistencia:float=0.0
+    camuflaje:float=0.0
     escondido:bool=False
     
     def intentar_huir(self)->bool:
@@ -111,7 +111,7 @@ class Presa(Especie):
 
 @dataclass
 class Depredador(Especie):
-    eficacia_caza:float
+    eficacia_caza:float=0.0
 
     def cazar(self,presa:Especie,clima_actual:str):
         
@@ -132,5 +132,6 @@ class Depredador(Especie):
         self.comer(int(capturas))
     
     def comer(self,presas_capturadas:int):
-        self.hambre=max(0.0,self.hambre-(presas_capturadas*8))
+        por_depredador=presas_capturadas/max(1, self.poblacion)
+        self.hambre=max(0.0,self.hambre-(por_depredador*50))
         print(f"Los depredadores cazaron {presas_capturadas}. \nHambre actual: {self.hambre}")
