@@ -18,3 +18,9 @@ corrige sintaxis en el codigo entero
 CORRECION EN CODIGO:
     clima:str
     simulacion:False
+
+# 2. Bug en isinstance: En el método cazar, usaste isinstance(presa) pasándole un solo argumento. isinstance requiere dos: el objeto y la clase isinstance(objeto, Clase).
+CORRECION EN CODIGO:
+        if isinstance(presa,Presa) and presa.intentar_huir():
+            capturas*=(1-presa.camuflaje)
+            print("Caza fallida, presa escondida")

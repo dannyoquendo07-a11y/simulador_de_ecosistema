@@ -96,7 +96,7 @@ class Depredador(Especie):
             eficacia_caza_real*=0.7
             print(f"La lluvia afecta la caza")
         capturas=self.eficacia_caza*eficacia_caza_real
-        if isinstance(presa) and presa.intentar_huir():
+        if isinstance(presa,Presa) and presa.intentar_huir():
             capturas*=(1-presa.camuflaje)
             print("Caza fallida, presa escondida")
         if capturas>presa.poblacion:
