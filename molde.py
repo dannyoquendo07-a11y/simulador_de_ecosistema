@@ -120,7 +120,7 @@ class Presa(Especie):
     
     def salir_de_refugio(self):
         if not self.escondido:
-            raise ExcepcionDeEstadoRefugioInvalido(f"{self.nombre} ya estaba fuera del refugio.")
+            raise ExcepcionDeEstadoRefugioInvalido(f"{self.nombre} ya estaba fuera del refugio")
         self.escondido=False
         self.tasa_mortalidad/=0.8
         print(f"{self.nombre} ha salido del refugio.")
@@ -131,9 +131,9 @@ class Depredador(Especie):
 
     def cazar(self,presa:Especie,clima_actual:str):
         if self.poblacion <= 0:
-            raise ExcepcionDeEspecieExtinta(f"El depredador {self.nombre} está extinto y no puede cazar.")
+            raise ExcepcionDeEspecieExtinta(f"El depredador: {self.nombre} está extinto y no puede cazar")
         if presa.poblacion <= 0:
-            return
+            raise ExcepcionDeEspecieExtinta(f"El depredador: {self.nombre} no puede cazar porque la presa: {presa.nombre} esta extinta")
         
         eficacia_caza_real=self.eficacia_caza
         if clima_actual=="Lluvia":
@@ -144,11 +144,12 @@ class Depredador(Especie):
         if isinstance(presa,Presa) and presa.intentar_huir():
             capturas*=(1-presa.camuflaje)
             print("Caza fallida, presa escondida")
-        
-        if capturas>presa.poblacion:
-            capturas=presa.poblacion
-        presa.poblacion-=int(capturas)
-        self.comer(int(capturas))
+        capturas_reales = min(int(capturas), presa.poblacion)
+        if capturas_reales==0:
+            raise ExcepcionDeRecursoInsuficiente(f"El depredador: {self.nombre} no logró capturar ninguna presa")
+
+        presa.poblacion -= capturas_reales
+        self.comer(capturas_reales)
     
     def comer(self,presas_capturadas:int):
         por_depredador=presas_capturadas/max(1, self.poblacion)
