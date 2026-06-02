@@ -73,4 +73,11 @@ Población inicial de conejos: 40 (definida en la línea 59).
 Resultado esperado: Reducirse en 15 conejos (para llegar a 25).
 Resultado real: Solo disminuyó en 2 conejos (dejando la población en 38).
 SOLUCION:
-# Para que la caza sea dinámica y realista, el número de capturas debería depender de cuántos depredadores hay cazando y de su eficacia. Modifica el método cazar en tu archivo principal para que multiplique la eficacia real por la población de depredadores:
+# Para que la caza sea dinámica y realista, el número de capturas debería depender de cuántos depredadores hay cazando y de su eficacia. Modifica el método cazar en tu archivo principal para que multiplique la eficacia real por la población de depredadores
+
+#yo
+como ajustar el main que ya tenia con las excepciones
+
+#ia
+como ahora el modelo de simulación lanza excepciones cuando ocurren eventos críticos o inválidos, el simulador debe ser capaz de capturar esas excepciones (try-except) para que el programa no se rompa abruptamente.
+Envolvemos las acciones diarias en un bloque try-except. Si ocurre un corte por recursos o extinción, el simulador lo reportará de manera limpia y detendrá (o continuará, según decidas) la ejecución.
