@@ -1,5 +1,5 @@
 import unittest
-from molde import Especie
+from molde import Especie,Presa,Depredador
 
 class TestEspecies(unittest.TestCase):
     def test_inicializacion_poblacion(self):
@@ -38,10 +38,13 @@ class EcosistemaTests(unittest.TestCase):
         # que un herviboro pueda comer vegetacion
 
         # crear un herviboro
-
+        conejo=Presa(nombre="Conejo", poblacion_inicial=20, tasa_reproduccion=0.3, tasa_mortalidad=0.1, resistencia=0.5, camuflaje=0.2)
+        conejo.hambre=50.0
         # crear la vegetacion
-
+        vegetacion_disponible = 100.0
         # probar la interaccion
+        conejo.comer(vegetacion_disponible)
+        self.assertEqual(conejo.hambre, 0.0) # El hambre baja de 50.0 a 0.0
         ...
 
     def test_carnivoro_vegetacion(self):
