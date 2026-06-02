@@ -72,6 +72,12 @@ class EcosistemaTests(unittest.TestCase):
         self.assertTrue(conejo.escondido)
         self.assertAlmostEqual(conejo.tasa_mortalidad,0.4)
 
+    def test_salir_de_refugio(self):
+        conejo = Presa(nombre="Conejo",poblacion_inicial=10,tasa_reproduccion=0.0,tasa_mortalidad=0.4,resistencia=0.0,camuflaje=0.0)
+        conejo.escondido=True
+        conejo.salir_de_refugio()
+        self.assertFalse(conejo.escondido)
+        self.assertAlmostEqual(conejo.tasa_mortalidad,0.5)
 
 
 if __name__ == "__main__":
