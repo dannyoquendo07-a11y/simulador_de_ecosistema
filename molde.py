@@ -1,6 +1,10 @@
 from dataclasses import dataclass, field
 import random
 from typing import List
+from excepciones import (ExcepcionDePoblacionInvalida,
+                        ExcepcionDeEspecieExtinta,
+                        ExcepcionDeRecursoInsuficiente,
+                        ExcepcionDeEstadoRefugioInvalido)
 
 @dataclass
 class Entorno:
@@ -53,6 +57,8 @@ class Especie:
     hambre:float=0.0
     
     def __post_init__(self):
+        if self.poblacion_inicial<0:
+            raise ExcepcionDePoblacionInvalida(f"La población inicial de: {self.nombre} no puede ser negativa")
         self._poblacion=self.poblacion_inicial
 
     @property
@@ -61,9 +67,8 @@ class Especie:
     @poblacion.setter
     def poblacion(self,valor:int):
         if valor<0:
-            self._poblacion=0
-        else:
-            self._poblacion=valor
+            raise ExcepcionDePoblacionInvalida("No se puede asignar una población negativa.")
+        self._poblacion=valor
 
     def actualizar(self,recursos_disponibles:float):
         if self.poblacion<=0:
@@ -88,6 +93,8 @@ class Presa(Especie):
     escondido:bool=False
     
     def intentar_huir(self)->bool:
+        if self.poblacion<=0:
+            raise ExcepcionDeEspecieExtinta(f"La presa {self.nombre} está extinta y no puede huir.")
         self.hambre+=10
         return random.random()<self.resistencia
     
@@ -96,6 +103,8 @@ class Presa(Especie):
             self.hambre=max(0.0,self.hambre-(abundancia_recursos*0.5))
         else:
             print("Hay escazes no se encontro comida")
+            if self.hambre>80:
+                raise ExcepcionDeEspecieExtinta(f"La presa {self.nombre} está extinta y no puede comer.")
     
     def buscar_refugio(self):
         if not self.escondido:
