@@ -65,7 +65,12 @@ class EcosistemaTests(unittest.TestCase):
         conejo = Presa(nombre="Conejo",poblacion_inicial=30,resistencia=0.0,camuflaje=0.0)
         lobo.cazar(conejo,clima_actual="Lluvia")
         self.assertEqual(conejo.poblacion,23)
-
+    
+    def test_buscar_refugio(self):
+        conejo=Presa(nombre="Conejo",poblacion_inicial=10,tasa_reproduccion=0.0,tasa_mortalidad=0.5,resistencia=0.0,camuflaje=0.0)
+        conejo.buscar_refugio()
+        self.assertTrue(conejo.escondido)
+        self.assertAlmostEqual(conejo.tasa_mortalidad,0.4)
 
 
 
