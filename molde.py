@@ -14,7 +14,7 @@ class Entorno:
     clima:str
     dia_actual:int=0
     simulacion:bool=False
-    especies:list['Especie']=field(default_factory=list)
+    especies:List['Especie']=field(default_factory=list)
     
     def __post_init__(self):
         if self.especies is None:
@@ -72,7 +72,8 @@ class Especie:
 
     def actualizar(self,recursos_disponibles:float):
         if self.poblacion<=0:
-            return
+            raise ExcepcionDeEspecieExtinta(f"La especie {self.nombre} ya está extinta y no puede actualizarse")
+        
         self.hambre+=15
         tasa_mortalidad_efectiva=self.tasa_mortalidad
         if self.hambre>70:
@@ -99,6 +100,10 @@ class Presa(Especie):
         return random.random()<self.resistencia
     
     def comer(self,abundancia_recursos:float):
+        if self.poblacion<=0:
+            raise ExcepcionDeEspecieExtinta(f"La presa {self.nombre} está extinta y no puede comer")
+        if abundancia_recursos<10:
+            raise ExcepcionDeRecursoInsuficiente(f"No hay suficiente vegetación para alimentar a: {self.nombre}")
         if abundancia_recursos>20:
             self.hambre=max(0.0,self.hambre-(abundancia_recursos*0.5))
         else:
@@ -107,14 +112,14 @@ class Presa(Especie):
                 raise ExcepcionDeEspecieExtinta(f"La presa {self.nombre} está extinta y no puede comer.")
     
     def buscar_refugio(self):
-        if not self.escondido:
+        if self.escondido:
             raise ExcepcionDeEstadoRefugioInvalido(f"{self.nombre} ya está escondido.")
         self.escondido=True
         self.tasa_mortalidad*=0.8
         print(f"La poblacion de: {self.nombre} se ha escondido")
     
     def salir_de_refugio(self):
-        if self.escondido:
+        if not self.escondido:
             raise ExcepcionDeEstadoRefugioInvalido(f"{self.nombre} ya estaba fuera del refugio.")
         self.escondido=False
         self.tasa_mortalidad/=0.8
@@ -125,8 +130,9 @@ class Depredador(Especie):
     eficacia_caza:float=0.0
 
     def cazar(self,presa:Especie,clima_actual:str):
-        
-        if self.poblacion<=0 or presa.poblacion<=0:
+        if self.poblacion <= 0:
+            raise ExcepcionDeEspecieExtinta(f"El depredador {self.nombre} está extinto y no puede cazar.")
+        if presa.poblacion <= 0:
             return
         
         eficacia_caza_real=self.eficacia_caza
@@ -134,9 +140,11 @@ class Depredador(Especie):
             eficacia_caza_real*=0.7
             print(f"La lluvia afecta la caza")
         capturas=self.poblacion*eficacia_caza_real
+        
         if isinstance(presa,Presa) and presa.intentar_huir():
             capturas*=(1-presa.camuflaje)
             print("Caza fallida, presa escondida")
+        
         if capturas>presa.poblacion:
             capturas=presa.poblacion
         presa.poblacion-=int(capturas)
