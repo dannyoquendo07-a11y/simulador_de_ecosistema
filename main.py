@@ -1,8 +1,8 @@
 from molde import Entorno, Presa, Depredador
 from excepciones import (ExcepcionDePoblacionInvalida,
-                         ExcepcionDeEspecieExtinta,
-                         ExcepcionDeRecursoInsuficiente,
-                         ExcepcionDeEstadoRefugioInvalido)
+                        ExcepcionDeEspecieExtinta,
+                        ExcepcionDeRecursoInsuficiente,
+                        ExcepcionDeEstadoRefugioInvalido)
 
 class SimuladorEcosistema:
     def __init__(self,entorno:Entorno,presa:Presa,depredador:Depredador):
@@ -30,11 +30,24 @@ class SimuladorEcosistema:
                     self.presa.actualizar(recursos_disponibles=self.entorno.vegetacion)
                 if self.depredador.poblacion>0:
                     self.depredador.actualizar(recursos_disponibles=self.presa.poblacion)
-            print(f"Fin del Día {self.entorno.dia_actual} \n{self.presa.nombre}: {self.presa.poblacion} \n{self.depredador.nombre}: {self.depredador.poblacion}")
-            #evaluacion de colapso
-            if self.presa.poblacion<=0 and self.depredador.poblacion<=0:
-                print("Ecosistema colapsado. Fin del mundo")
+                    print(f"Fin del Día {self.entorno.dia_actual} \n{self.presa.nombre}: {self.presa.poblacion} \n{self.depredador.nombre}: {self.depredador.poblacion}")
+                #evaluacion de colapso
+                if self.presa.poblacion<=0 and self.depredador.poblacion<=0:
+                    print("Ecosistema colapsado. Fin del mundo")
+                    break
+                elif self.presa.poblacion<=0:
+                    print(f"Presas extintas, los depredadores pronto moriran de hambre")
+                    break
+            except ExcepcionDeRecursoInsuficiente as e:
+                print(f"Alerta ambiental: {e}, la escasez afectara el proximo dia")
                 break
-            elif self.presa.poblacion<=0:
-                print(f"Presas extintas, los depredadores pronto moriran de hambre")
+            except ExcepcionDeEspecieExtinta as e:
+                print(f"Fin de la simulacion: {e}")
                 break
+            except ExcepcionDeEstadoRefugioInvalido as e:
+                print(f"Error en refugio: {e}")
+                #no detiene la simulacion
+            except ExcepcionDePoblacionInvalida as e:
+                print(f"Error critico de poblacion: {e}")
+                break
+
