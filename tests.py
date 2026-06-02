@@ -27,6 +27,11 @@ class TestEspecies(unittest.TestCase):
         self.assertEqual(ciervo_sano.poblacion, 90)
         self.assertEqual(ciervo_hambriento.poblacion, 65)
 
+    def test_extincion(self):
+        dodo=Especie("Dodo",0,0.5,0.1)
+        dodo.actualizar(recursos_disponibles=100)
+        self.assertEqual(dodo.poblacion,0)
+
 class EcosistemaTests(unittest.TestCase):
 
     def test_comer_vegetacion(self):
