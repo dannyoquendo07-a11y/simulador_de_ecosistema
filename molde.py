@@ -108,15 +108,17 @@ class Presa(Especie):
     
     def buscar_refugio(self):
         if not self.escondido:
-            self.escondido=True
-            self.tasa_mortalidad*=0.8
-            print(f"La poblacion de: {self.nombre} se ha escondido")
+            raise ExcepcionDeEstadoRefugioInvalido(f"{self.nombre} ya está escondido.")
+        self.escondido=True
+        self.tasa_mortalidad*=0.8
+        print(f"La poblacion de: {self.nombre} se ha escondido")
     
     def salir_de_refugio(self):
         if self.escondido:
-            self.escondido=False
-            self.tasa_mortalidad/=0.8
-            print(f"{self.nombre} ha salido del refugio.")
+            raise ExcepcionDeEstadoRefugioInvalido(f"{self.nombre} ya estaba fuera del refugio.")
+        self.escondido=False
+        self.tasa_mortalidad/=0.8
+        print(f"{self.nombre} ha salido del refugio.")
 
 @dataclass
 class Depredador(Especie):
