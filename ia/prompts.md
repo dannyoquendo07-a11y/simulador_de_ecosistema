@@ -59,3 +59,18 @@ hambre: float = 0.0 (⚠️ VALOR POR DEFECTO)
 resistencia: float (❌ SIN VALOR POR DEFECTO - Rompe la regla porque va después de hambre)
 camuflaje: float
 Para solucionar esto en las clases heredadas (Presa y Depredador) cuando la clase padre ya tiene un argumento con valor por defecto, lo más limpio y recomendable es asignarles también un valor por defecto a los nuevos atributos de las subclases.
+
+#yo
+explicame por que fallo mi unittest
+
+#ia
+ERROR EN CODIGO:
+self.assertEqual(conejo.poblacion, 25)
+El terminal arroja el siguiente error:
+AssertionError: 38 != 25
+Esto significa que:
+Población inicial de conejos: 40 (definida en la línea 59).
+Resultado esperado: Reducirse en 15 conejos (para llegar a 25).
+Resultado real: Solo disminuyó en 2 conejos (dejando la población en 38).
+SOLUCION:
+# Para que la caza sea dinámica y realista, el número de capturas debería depender de cuántos depredadores hay cazando y de su eficacia. Modifica el método cazar en tu archivo principal para que multiplique la eficacia real por la población de depredadores:
