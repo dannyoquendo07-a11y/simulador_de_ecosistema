@@ -48,8 +48,8 @@ class Entorno:
 class Especie:
     nombre:str
     poblacion_inicial:int
-    tasa_reproduccion:float
-    tasa_mortalidad:float
+    tasa_reproduccion:float=0.0
+    tasa_mortalidad:float=0.0
     hambre:float=0.0
     
     def __post_init__(self):
