@@ -7,9 +7,10 @@ class TestEspecies(unittest.TestCase):
         self.assertEqual(lobo.poblacion,50)
     
     def test_poblacion_no_negativa(self):
+        from excepciones import ExcepcionDePoblacionInvalida        
         conejo=Especie("Conejo",10,0.2,0.1)
-        conejo.poblacion=-10
-        self.assertEqual(conejo.poblacion, 0)
+        with self.assertRaises(ExcepcionDePoblacionInvalida):
+            conejo.poblacion=-10
     
     def test_hambre_extrema_aumente_mortalidad(self):
         """Verifica que si el hambre supera 70 la mortalidad aumente y mueran mas"""
@@ -78,7 +79,14 @@ class EcosistemaTests(unittest.TestCase):
         conejo.salir_de_refugio()
         self.assertFalse(conejo.escondido)
         self.assertAlmostEqual(conejo.tasa_mortalidad,0.5)
-
+    
+    def test_escenario_base_settings(self):
+        from main import SimuladorEcosistema
+        from settings import ecosistema_bosque,conejos,zorros
+        simulador=SimuladorEcosistema(entorno=ecosistema_bosque,presa=conejos,depredador=zorros)
+        poblacion_inicial_conejos=conejos.poblacion
+        simulador.ejecutar(dias=1)
+        self.assertEqual(ecosistema_bosque.dia_actual, 1)
 
 if __name__ == "__main__":
     unittest.main()
