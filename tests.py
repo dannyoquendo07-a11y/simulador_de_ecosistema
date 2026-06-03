@@ -1,6 +1,8 @@
 import unittest
-from molde import Especie,Presa,Depredador
+from molde import Entorno,Especie,Presa,Depredador
 from excepciones import ExcepcionDePoblacionInvalida, ExcepcionDeEspecieExtinta
+from main import SimuladorEcosistema
+from settings import ecosistema_bosque, conejos, zorros
 
 class TestEspecies(unittest.TestCase):
     def test_inicializacion_poblacion(self):
@@ -81,12 +83,19 @@ class EcosistemaTests(unittest.TestCase):
         self.assertAlmostEqual(conejo.tasa_mortalidad,0.5)
     
     def test_escenario_base_settings(self):
-        from main import SimuladorEcosistema
-        from settings import ecosistema_bosque,conejos,zorros
-        simulador=SimuladorEcosistema(entorno=ecosistema_bosque,presa=conejos,depredador=zorros)
-        poblacion_inicial_conejos=conejos.poblacion
+        simulador = SimuladorEcosistema(entorno=ecosistema_bosque, presa=conejos, depredador=zorros)
+        poblacion_inicial_conejos = conejos.poblacion
         simulador.ejecutar(dias=1)
         self.assertEqual(ecosistema_bosque.dia_actual, 1)
+        self.assertNotEqual(conejos.poblacion, poblacion_inicial_conejos)
+    
+    def test_colapso_total_del_ecosistema(self):
+        entorno=Entorno(vegetacion=50.0, humedad=50.0, temperatura=20.0, clima="Soleado")
+        presas_muertas=Presa(nombre="Conejos", poblacion_inicial=0, tasa_reproduccion=0.1, tasa_mortalidad=0.1, resistencia=0.1, camuflaje=0.1)
+        depredadores_muertos=Depredador(nombre="Zorros", poblacion_inicial=0, tasa_reproduccion=0.1, tasa_mortalidad=0.1, eficacia_caza=0.1)
+        simulador=SimuladorEcosistema(entorno=entorno, presa=presas_muertas, depredador=depredadores_muertos)
+        simulador.ejecutar(dias=10)
+        self.assertLessEqual(entorno.dia_actual, 1)
 
 if __name__ == "__main__":
     unittest.main()
