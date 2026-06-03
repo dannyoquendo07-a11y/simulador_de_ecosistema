@@ -1,13 +1,13 @@
 import unittest
 from molde import Especie,Presa,Depredador
+from excepciones import ExcepcionDePoblacionInvalida, ExcepcionDeEspecieExtinta
 
 class TestEspecies(unittest.TestCase):
     def test_inicializacion_poblacion(self):
         lobo=Especie("Lobo",50,0.1,0.05)
         self.assertEqual(lobo.poblacion,50)
     
-    def test_poblacion_no_negativa(self):
-        from excepciones import ExcepcionDePoblacionInvalida        
+    def test_poblacion_no_negativa(self):     
         conejo=Especie("Conejo",10,0.2,0.1)
         with self.assertRaises(ExcepcionDePoblacionInvalida):
             conejo.poblacion=-10
@@ -29,9 +29,9 @@ class TestEspecies(unittest.TestCase):
         self.assertEqual(ciervo_hambriento.poblacion, 65)
 
     def test_extincion(self):
-        dodo=Especie("Dodo",0,0.5,0.1)
-        dodo.actualizar(recursos_disponibles=100)
-        self.assertEqual(dodo.poblacion,0)
+        dodo=Especie(nombre="Dodo",poblacion_inicial=0,tasa_reproduccion=0.5,tasa_mortalidad=0.1)
+        with self.assertRaises(ExcepcionDeEspecieExtinta):
+            dodo.actualizar(recursos_disponibles=100)
 
 class EcosistemaTests(unittest.TestCase):
 
