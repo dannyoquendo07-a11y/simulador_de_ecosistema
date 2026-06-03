@@ -52,20 +52,6 @@ class SimuladorEcosistema:
                 break
 
 if __name__ == "__main__":
-    ecosistema_bosque=Entorno(vegetacion=120.0, 
-                            humedad=50.0,
-                            temperatura=24.0,
-                            clima="Soleado")
-    conejos=Presa(nombre="Conejos",
-                poblacion_inicial=80, 
-                tasa_reproduccion=0.3,
-                tasa_mortalidad=0.1,
-                resistencia=0.4,
-                camuflaje=0.2)
-    zorros=Depredador(nombre="Zorros",
-                    poblacion_inicial=15,
-                    tasa_reproduccion=0.15,
-                    tasa_mortalidad=0.08,
-                    eficacia_caza=0.25)
-    simulador=SimuladorEcosistema(entorno=ecosistema_bosque,presa=conejos,depredador=zorros,)
-    simulador.ejecutar(dias=2)
+    from settings import ecosistema_bosque,conejos,zorros
+    simulador=SimuladorEcosistema(entorno=ecosistema_bosque,presa=conejos,depredador=zorros)
+    simulador.ejecutar(1)
