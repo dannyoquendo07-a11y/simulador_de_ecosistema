@@ -95,3 +95,12 @@ Al pasarle [] a Pandas, el DataFrame se crea sin columnas, y df.describe() explo
 SOLUCION
 No uses settings: Crea el entorno, los conejos y los zorros directamente dentro de la función (instancias frescas) para que siempre empiecen con la población full (80 conejos y 15 zorros) y no mueran al instante.
 Sube los días de simulación: Probar con dias_simulacion=1 es muy poquito para que Pandas y Matplotlib tengan datos que graficar. Vamos a ponerle 20 o 30 días.
+
+#yo
+me da otro error cuando ejecuto el archivo analytics, no se genera la ventana con la grafica y en la terminal me aparece la advertencia de "La simulacion no guardo datos en el dia 1"
+
+#ia
+Si en el mismísimo Día 1 ocurre un error tu bloque except atrapa el error y ejecuta un break instantáneo. Como el break ocurre antes de que el código llegue a la línea del .append(), la lista se queda en blanco.
+El .append() o el return están mal posicionados: Si las líneas de recolección de datos están fuera del ciclo for o si olvidaste colocar el return al final absoluto del método ejecutar, la lista nunca se envía.
+SOLUCION
+Reestructurar el archivo main

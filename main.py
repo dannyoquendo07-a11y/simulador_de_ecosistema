@@ -14,6 +14,12 @@ class SimuladorEcosistema:
     def ejecutar(self,dias:int):
         for avance in range(dias):
             try:
+                self.historial_datos.append({
+                    "Día": self.entorno.dia_actual,
+                    "Vegetación": self.entorno.vegetacion,
+                    "Conejos": max(0, self.presa.poblacion),
+                    "Zorros": max(0, self.depredador.poblacion)
+                })
                 self.entorno.avanzar_dia()
                 #comportamiento de la presa
                 if self.entorno.clima=="Lluvia" and not self.presa.escondido:
@@ -32,12 +38,7 @@ class SimuladorEcosistema:
                 if self.depredador.poblacion>0:
                     self.depredador.actualizar(recursos_disponibles=self.presa.poblacion)
                     print(f"Fin del Día {self.entorno.dia_actual} \n{self.presa.nombre}: {self.presa.poblacion} \n{self.depredador.nombre}: {self.depredador.poblacion}")
-                self.historial_datos.append({
-                    "Día": self.entorno.dia_actual,
-                    "Vegetación": self.entorno.vegetacion,
-                    "Conejos": max(0, self.presa.poblacion),
-                    "Zorros": max(0, self.depredador.poblacion)
-                })
+                
                 #evaluacion de colapso
                 if self.presa.poblacion<=0 and self.depredador.poblacion<=0:
                     print("Ecosistema colapsado. Fin del mundo")
@@ -57,7 +58,7 @@ class SimuladorEcosistema:
             except ExcepcionDePoblacionInvalida as e:
                 print(f"Error critico de poblacion: {e}")
                 break
-
+        return self.historial_datos   
 if __name__ == "__main__":
     from settings import ecosistema_bosque,conejos,zorros
     simulador=SimuladorEcosistema(entorno=ecosistema_bosque,presa=conejos,depredador=zorros)
