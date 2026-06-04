@@ -14,4 +14,11 @@ def generar_reporte(dias_simulacion=1):
     
     df=pd.DataFrame(datos_crudos)
     print("RESUMEN ESTADISTICO")
-    print(df.describe()) 
+    print(df.describe())
+    print("TABLA DE EVOLUCION")
+    print(df.to_string(index=False))
+    
+    plt.figure(figsize=(10,6))
+    plt.plot(df["Día"],df["Conejos"],label="Conejos(Presas)",color="pink",linewidth=2.5,marker="o")
+    plt.plot(df["Día"],df["Zorros"],label="Zorros(Depredadores)",color="orange",linewidth=2.5,marker="s")
+    plt.plot(df["Día"],df["Vegetación"],label="Vegetación",color="green",linestyle="--")
