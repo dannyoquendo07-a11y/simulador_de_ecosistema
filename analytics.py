@@ -26,3 +26,7 @@ def generar_reporte(dias_simulacion=1):
     plt.title("Evolución Temporal del Ecosistema",fontsize=14,fontweight='bold')
     plt.xlabel("Días",fontsize=12)
     plt.ylabel("Población / Recursos",fontsize=12)
+
+    plt.grid(True,linestyle=":",alpha=0.6)
+    plt.legend(fontsize=11)
+    
