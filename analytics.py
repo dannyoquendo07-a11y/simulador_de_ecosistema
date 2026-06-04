@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from main import SimuladorEcosistema
 from molde import Entorno, Presa, Depredador
 
-def generar_reporte(dias_simulacion=1):
+def generar_reporte(dias_simulacion=20):
     ecosistema_bosque=Entorno(vegetacion=150.0,humedad=50.0,temperatura=24.0,clima="Soleado")
     conejos=Presa(nombre="Conejos",poblacion_inicial=80,tasa_reproduccion=0.3,tasa_mortalidad=0.1,resistencia=0.4,camuflaje=0.2)
     zorros=Depredador(nombre="Zorros",poblacion_inicial=15,tasa_reproduccion=0.15,tasa_mortalidad=0.08,eficacia_caza=0.25)
@@ -41,4 +41,4 @@ def generar_reporte(dias_simulacion=1):
     plt.show()
 
 if __name__ == "__main__":
-    generar_reporte(dias_simulacion=1)
+    generar_reporte(dias_simulacion=20)
