@@ -79,5 +79,19 @@ SOLUCION:
 como ajustar el main que ya tenia con las excepciones
 
 #ia
-como ahora el modelo de simulación lanza excepciones cuando ocurren eventos críticos o inválidos, el simulador debe ser capaz de capturar esas excepciones (try-except) para que el programa no se rompa abruptamente.
-Envolvemos las acciones diarias en un bloque try-except. Si ocurre un corte por recursos o extinción, el simulador lo reportará de manera limpia y detendrá (o continuará, según decidas) la ejecución.
+# como ahora el modelo de simulación lanza excepciones cuando ocurren eventos críticos o inválidos, el simulador debe ser capaz de capturar esas excepciones (try-except) para que el programa no se rompa abruptamente. Envolvemos las acciones diarias en un bloque try-except. Si ocurre un corte por recursos o extinción, el simulador lo reportará de manera limpia y detendrá (o continuará, según decidas) la ejecución.
+
+#yo
+como corregir todos los errores que me dio correr por primera vez el archivo analytics. Errores:
+raise ValueError("Cannot describe a DataFrame without columns")
+ValueError: Cannot describe a DataFrame without columns
+
+#ia
+EXPLICACION DE ERRORES
+Estás llamando a generar_reporte(dias_simulacion=1). Como le pides solo 1 día de simulación, y además estás importando las variables globales directamente desde settings (from settings import ecosistema_bosque, conejos, zorros), está ocurriendo lo siguiente:Al importar conejos y zorros de settings.py, si corriste pruebas antes, sus poblaciones ya se quedaron en 0 en la memoria de Python, o la simulación se frena al primer intento por falta de recursos.
+Como se frena de inmediato en el día 1, main.py hace un break y devuelve la lista vacía [].
+Al pasarle [] a Pandas, el DataFrame se crea sin columnas, y df.describe() explota con el error
+
+SOLUCION
+No uses settings: Crea el entorno, los conejos y los zorros directamente dentro de la función (instancias frescas) para que siempre empiecen con la población full (80 conejos y 15 zorros) y no mueran al instante.
+Sube los días de simulación: Probar con dias_simulacion=1 es muy poquito para que Pandas y Matplotlib tengan datos que graficar. Vamos a ponerle 20 o 30 días.

@@ -31,3 +31,6 @@ def generar_reporte(dias_simulacion=1):
     plt.legend(fontsize=11)
 
     plt.show()
+
+if __name__ == "__main__":
+    generar_reporte(dias_simulacion=1)
