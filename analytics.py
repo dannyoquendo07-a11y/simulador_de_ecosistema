@@ -22,3 +22,7 @@ def generar_reporte(dias_simulacion=1):
     plt.plot(df["Día"],df["Conejos"],label="Conejos(Presas)",color="pink",linewidth=2.5,marker="o")
     plt.plot(df["Día"],df["Zorros"],label="Zorros(Depredadores)",color="orange",linewidth=2.5,marker="s")
     plt.plot(df["Día"],df["Vegetación"],label="Vegetación",color="green",linestyle="--")
+
+    plt.title("Evolución Temporal del Ecosistema",fontsize=14,fontweight='bold')
+    plt.xlabel("Días",fontsize=12)
+    plt.ylabel("Población / Recursos",fontsize=12)
