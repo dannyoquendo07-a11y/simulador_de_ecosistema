@@ -29,4 +29,5 @@ def generar_reporte(dias_simulacion=1):
 
     plt.grid(True,linestyle=":",alpha=0.6)
     plt.legend(fontsize=11)
-    
+
+    plt.show()
