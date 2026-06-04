@@ -9,6 +9,7 @@ class SimuladorEcosistema:
         self.entorno=entorno
         self.presa=presa
         self.depredador=depredador
+        self.historial_datos=[]
     
     def ejecutar(self,dias:int):
         for avance in range(dias):
@@ -31,6 +32,12 @@ class SimuladorEcosistema:
                 if self.depredador.poblacion>0:
                     self.depredador.actualizar(recursos_disponibles=self.presa.poblacion)
                     print(f"Fin del Día {self.entorno.dia_actual} \n{self.presa.nombre}: {self.presa.poblacion} \n{self.depredador.nombre}: {self.depredador.poblacion}")
+                self.historial_datos.append({
+                    "Día": self.entorno.dia_actual,
+                    "Vegetación": self.entorno.vegetacion,
+                    "Conejos": max(0, self.presa.poblacion),
+                    "Zorros": max(0, self.depredador.poblacion)
+                })
                 #evaluacion de colapso
                 if self.presa.poblacion<=0 and self.depredador.poblacion<=0:
                     print("Ecosistema colapsado. Fin del mundo")
