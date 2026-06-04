@@ -11,3 +11,7 @@ from settings import ecosistema_bosque,conejos,zorros
 def generar_reporte(dias_simulacion=1):
     simulador=SimuladorEcosistema(entorno=ecosistema_bosque,presa=conejos,depredador=zorros)
     datos_crudos=simulador.ejecutar(dias=dias_simulacion)
+    
+    df=pd.DataFrame(datos_crudos)
+    print("RESUMEN ESTADISTICO")
+    print(df.describe()) 
