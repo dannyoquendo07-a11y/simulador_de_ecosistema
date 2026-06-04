@@ -16,6 +16,10 @@ def generar_reporte(dias_simulacion=1):
     simulador=SimuladorEcosistema(entorno=ecosistema_bosque,presa=conejos,depredador=zorros)
     datos_crudos=simulador.ejecutar(dias=dias_simulacion)
     
+    if not datos_crudos:
+        print("Error: La simulacion no guardo datos en el dia 1")
+        return
+    
     df=pd.DataFrame(datos_crudos)
     print("RESUMEN ESTADISTICO")
     print(df.describe())
