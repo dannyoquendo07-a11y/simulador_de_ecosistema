@@ -11,6 +11,11 @@ ARCHIVOS:
 'analytics.py': Recibe los datos resultantes del main y los trasnforma en estructuras tabulares gracias a pandas y se visualiza esta curva en una ventana grafica de matplotlib
 'prompts.md': almacena bitacoras del desarrollo del proyecto junto a la ia
 
+DIAGRAMA DE LAS CLASES:
+Las clases Presa y Depredador heredan directamente de la clase base Especie, reutilizando atributos comunes (nombre, poblacion, hambre) y sus metodos de ciclo de vida (actualizar). 
+Se utiliza @property y @poblacion.setter para proteger la variable interna _poblacion asi se impide la asignación erronea (como poblaciones negativas) y arrojan excepciones personalizadas.
+Aunque ambas especies comen, Presa consume directamente la variable vegetacion del Entorno, mientras que Depredador usa el metodo comer() basado en las presas capturadas.
+
 - sincerar las intenciones
 No diseñe el programa como un videojuego recreativo ni posee interfaz grafica, el proposito es que sirva como una herramienta de simulación computacional para observar como variables (clima, tasas de reproducción, mortalidad y escasez) afectan la estabilidad biologica a lo largo del tiempo.
 
