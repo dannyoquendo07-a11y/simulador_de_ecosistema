@@ -2,6 +2,14 @@
 
 - documentacion: diagramas, texto.
 
+ARCHIVOS:
+'molde.py': Es el nucleo del sistema, contiene las clases Entorno, Presa y Depredador que definen el comportamiento esencial del proyecto
+'main.py': es el motor de la simulacion, controla los ciclos diarios y evalua las condiciones limites de colapso
+'settings.py': funciona para inicializar los parametros del ecosistema y facilitar la mutacion de poblaciones iniciales o climas en un unico archivo
+'excepciones.py': define los errores encargados de alterar eventos ciriticos en el entorno
+'tests.py': coloca pruebas para ver el comportamiento del ecosistema a borde y aegura la tolerancia de ellas
+'analytics.py': Recibe los datos resultantes del main y los trasnforma en estructuras tabulares gracias a pandas y se visualiza esta curva en una ventana grafica de matplotlib
+'prompts.md': almacena bitacoras del desarrollo del proyecto junto a la ia
 
 - sincerar las intenciones
 No diseñe el programa como un videojuego recreativo ni posee interfaz grafica, el proposito es que sirva como una herramienta de simulación computacional para observar como variables (clima, tasas de reproducción, mortalidad y escasez) afectan la estabilidad biologica a lo largo del tiempo.
