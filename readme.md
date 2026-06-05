@@ -20,4 +20,14 @@ Aunque ambas especies comen, Presa consume directamente la variable vegetacion d
 No diseñe el programa como un videojuego recreativo ni posee interfaz grafica, el proposito es que sirva como una herramienta de simulación computacional para observar como variables (clima, tasas de reproducción, mortalidad y escasez) afectan la estabilidad biologica a lo largo del tiempo.
 
 - si usas paquetes externos, como configurar el entorno virtual
+
+1. Crear el entorno
+python -m venv venv
+2. Activar el entorno
+.\venv\Scripts\Activate.ps1
+3. Instalar los paquetes
+pip install pandas matplotlib
+4. Ejecutar
+python analytics.py
+
 - no hacer un espaguetti ( no combinar parte grafica con parte logica )
