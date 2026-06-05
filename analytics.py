@@ -22,6 +22,7 @@ def generar_reporte(dias_simulacion=20):
     
     df=pd.DataFrame(datos_crudos)
     print("RESUMEN ESTADISTICO")
+    df.to_csv("datos.csv")
     print(df.describe())
     print("TABLA DE EVOLUCION")
     print(df.to_string(index=False))

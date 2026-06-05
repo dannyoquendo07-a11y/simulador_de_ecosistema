@@ -62,4 +62,4 @@ class SimuladorEcosistema:
 if __name__ == "__main__":
     from settings import ecosistema_bosque,conejos,zorros
     simulador=SimuladorEcosistema(entorno=ecosistema_bosque,presa=conejos,depredador=zorros)
-    simulador.ejecutar(1)
+    simulador.ejecutar(10)

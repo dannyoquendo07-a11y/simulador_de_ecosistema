@@ -16,7 +16,7 @@ ecosistema_bosque=Entorno(vegetacion=120.0,
     temperatura=24.0,
     clima="Soleado")
 conejos=Presa(nombre="Conejos",
-    poblacion_inicial=80, 
+    poblacion_inicial=10, 
     tasa_reproduccion=TASA_NATALIDAD_CONEJOS,
     tasa_mortalidad=TASA_MORTALIDAD_CONEJOS,
     resistencia=PROB_SOBREVIVIR_CLIMA_CONEJOS,
